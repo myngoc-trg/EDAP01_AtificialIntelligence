@@ -8,9 +8,9 @@ colors = {
     1: (227, 202, 165), #occupied
     2: (79, 189, 186), #start
     3: (246, 137, 137), #end
-    4: (255, 0, 0), #frontier
-    5: (0, 0, 255), #explored
-    6: (0, 255, 0), #path
+    4: (255, 0, 0), #frontier, red
+    5: (0, 0, 255), #explored, blue
+    6: (0, 255, 0), #path, green
 }
 
 class maze:
@@ -96,6 +96,7 @@ class maze:
         e = []
         if self.algorithm:
             f = self.algorithm.getFrontier()
+            f = [n[0] for n in f]
             e = self.algorithm.getExplored()
             
         self.screen.fill(colors[-1])

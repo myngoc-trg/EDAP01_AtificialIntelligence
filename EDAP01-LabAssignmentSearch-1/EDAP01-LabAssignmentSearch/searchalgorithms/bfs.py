@@ -51,16 +51,18 @@ class bfs(SearchAlgorithmBase):
          
         # Explore neighbors
         for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:  # Up, Down, Left, Right: (delta_row, delta_column)
-            nr, nc = r + dr, c + dc
+            neighbor= (r + dr, c + dc)
             # Check if neighbor is within bounds
-            if 0 <= nr < row_num and 0 <= nc < col_num and self._grid[nr,nc] != 1: # 1 represents occupied cell, probably wall
-                neighbor = (nr, nc)
+            if 0 <= neighbor[0] < row_num and 0 <= neighbor[1] < col_num and self._grid[neighbor[0],neighbor[1]] != 1: # 1 represents occupied cell, probably wall
+              
                 # Only add if neighbor is not already explored or not in frontier
                 if neighbor not in self._explored and neighbor not in [n[0] for n in self._frontier]:
                     # Add neighbor to frontier
                     self._frontier.append((neighbor, _, g + 1, current_node))
                     self._parent_map[neighbor] = current_node
-                    
+                    #print("Current parent map: ", self._parent_map)
+                    #print("Current frontier: ", self._frontier)
+
                     # Depth tracking
                     self._depth_map[neighbor] = self._depth_map[current_node] + 1
                     self._max_depth = max(self._max_depth, self._depth_map[neighbor])
