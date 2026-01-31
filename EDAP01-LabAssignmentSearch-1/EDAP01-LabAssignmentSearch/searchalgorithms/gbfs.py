@@ -13,8 +13,10 @@ class gbfs(SearchAlgorithmBase):
     
     def heuristic(self, node):
         # Euclidean distance heuristic from node n to goal
-        return np.sqrt((node[0] - self._goal[0])**2 + (node[1] - self._goal[1])**2)
+        #return np.sqrt((node[0] - self._goal[0])**2 + (node[1] - self._goal[1])**2)
 
+        # Manhattan distance heuristic from node n to goal
+        return abs(node[0] - self._goal[0]) + abs(node[1] - self._goal[1])
 
     def step(self):
         """
