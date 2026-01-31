@@ -20,14 +20,14 @@ class gbfs(SearchAlgorithmBase):
 
     def step(self):
         """
-        Performs one step of the Uniform Cost Search (UCS) algorithm.
-        - Use Priority Queue for the frontier based on path cost.  
+        Performs one step of the Greedy Best-First Search (GBFS) algorithm.
+        - Use Priority Queue for the frontier based on heuristic value.
         """
         
         """
-        Pseudocode for UCS
+        Pseudocode for GBFS
 
-        Function DFS(problem):
+        Function GBFS(problem):
             fringe = {Node(problem.initial_state)}
             while (true):
                 if (fringe.empty) return fail
