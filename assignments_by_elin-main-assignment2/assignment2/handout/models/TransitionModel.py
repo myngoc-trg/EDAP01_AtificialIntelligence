@@ -11,6 +11,8 @@
 # where it should always be assumed that the 'robot' first finds out how to turn (or not)
 # and then makes an actual step in that new direction, this is then considered a move (or step).
 #
+from __future__ import annotations
+
 
 import numpy as np
 import matplotlib.pyplot as plt

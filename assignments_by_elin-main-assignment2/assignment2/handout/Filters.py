@@ -1,10 +1,9 @@
+from __future__ import annotations
 
 import random
 import numpy as np
 
 from models import *
-
-
 #
 # Add your Filtering / Smoothing approach(es) here
 #
@@ -16,14 +15,20 @@ class FilterSmoother:
         self.__current_f = probs # initialising with dummy/step0-values
         self.__current_fb = probs # initialising with dummy/step0-values
         
+   
+     
+
         
     # sensorR is the sensor reading (index!) in step t_plus_one, f_t is the probability distribution in step t
     #
     # self.__current_f is the probability distribution resulting from the filtering    
-    def filter(self, sensorR : int, f_t : np.array) -> np.array :        #print( self.__f)
+    def filter(self, sensorR : int, f_t ) :        #print( self.__f)
         self.__current_f = f_t
- 
-        # add your code here 
+
+        f_new = self.__om.get_o_reading(sensorR) @ self.__tm.get_T_transp() @ self.__current_f
+        f_new = f_new / np.sum(f_new)
+
+        self.__current_f = f_new
 
         return self.__current_f
 
@@ -34,8 +39,15 @@ class FilterSmoother:
     # calculations / methods, while the inner loop from t to t-k is inside the smoothing.
     # 
     # self.__current_fb is the smoothed result (fb_vector)
-    def smooth(self, sensor_r_seq : np.array, f_k : np.array) -> np.array:
+    def smooth(self, sensor_r_seq, f_k ):
         self.__current_fb = f_k # in case there is no window to smooth over, just return the filtered result
 
-    	# add you code here        
+        b = np.ones(self.__sm.get_num_of_states()) # initialising with dummy/step0-values
+        for index in range(len(sensor_r_seq)-1,0,-1):
+            b = self.__tm.get_T() @ self.__om.get_o_reading(sensor_r_seq[index]) @ b
+        
+        fb = self.__current_fb * b
+        fb = fb / np.sum(fb)
+        self.__current_fb = fb
+        
         return self.__current_fb
